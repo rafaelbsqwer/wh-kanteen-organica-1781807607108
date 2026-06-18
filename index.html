@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="template-id" content="food-jidelna">
+  <title>KANTEEN ORGANICA — restaurace</title>
+  <meta name="description" content="Navštivte KANTEEN ORGANICA. Čerstvá kuchyně a příjemná atmosféra.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <noscript><style>#loading-screen{display:none!important}</style></noscript>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --white:#ffffff;
+      --bg-light:#f4f7f4;
+      --dark:#1a2e1a;
+      --primary:#4a7c4a;
+      --light-green:#6aad6a;
+      --very-light:#f0f7f0;
+      --dark-section:#2d4a2d;
+      --sans:'DM Sans',sans-serif;
+      --serif:'Lora',serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);color:var(--dark);background:var(--white);overflow-x:hidden}
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:var(--bg-light)}
+    ::-webkit-scrollbar-thumb{background:var(--primary);border-radius:2px}
+
+    /* ── LOADING ── */
+    #loading-screen{
+      position:fixed;inset:0;background:var(--white);z-index:9999;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;
+    }
+    .ls-company{font-family:var(--serif);font-size:clamp(2rem,5vw,3.5rem);color:var(--dark);font-weight:600;letter-spacing:-0.02em}
+    .ls-bar-wrap{width:200px;height:2px;background:rgba(74,124,74,.2);overflow:hidden}
+    .ls-bar{height:100%;width:0%;background:var(--primary);transition:width .1s linear}
+    .ls-text{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--primary);font-weight:500}
+
+    /* ── NAV ── */
+    #nav{
+      position:fixed;top:0;left:0;right:0;z-index:1000;
+      padding:20px 5%;display:flex;align-items:center;justify-content:space-between;
+      transition:background .4s,box-shadow .4s,padding .4s;
+    }
+    #nav.scrolled{background:var(--white);box-shadow:0 2px 20px rgba(26,46,26,.08);padding:14px 5%}
+    .nav-logo{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--white);text-decoration:none;transition:color .4s}
+    #nav.scrolled .nav-logo{color:var(--dark)}
+    .nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+    .nav-links a{font-size:.82rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.9);text-decoration:none;transition:color .3s}
+    #nav.scrolled .nav-links a{color:var(--dark)}
+    .nav-links a:hover{color:var(--light-green)}
+    #nav.scrolled .nav-links a:hover{color:var(--primary)}
+    .nav-cta{padding:10px 22px;border:1.5px solid rgba(255,255,255,.7);border-radius:2px;color:var(--white)!important;transition:all .3s!important}
+    #nav.scrolled .nav-cta{border-color:var(--primary);color:var(--primary)!important}
+    .nav-cta:hover{background:rgba(255,255,255,.12)!important}
+    #nav.scrolled .nav-cta:hover{background:var(--primary)!important;color:var(--white)!important}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:background .4s}
+    #nav.scrolled .hamburger span{background:var(--dark)}
+    @media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}}
+
+    /* ── HERO ── */
+    #hero{position:relative;width:100%;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    #hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;z-index:0}
+    #hero-video::-webkit-media-controls,
+    #hero-video::-webkit-media-controls-enclosure,
+    #hero-video::-webkit-media-controls-panel,
+    #hero-video::-webkit-media-controls-play-button{display:none!important}
+    #hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,46,26,.65),rgba(45,74,45,.5) 50%,rgba(26,46,26,.7));z-index:1}
+    .hero-content{position:relative;z-index:2;text-align:center;max-width:900px;padding:0 24px}
+    .hero-tag{display:inline-block;font-size:.75rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:24px}
+    .hero-title{font-family:var(--serif);font-size:clamp(2.8rem,7vw,6rem);font-weight:600;color:var(--white);line-height:1.08;letter-spacing:-.02em;margin-bottom:20px}
+    .hero-line{width:60px;height:2px;background:var(--light-green);margin:0 auto 24px}
+    .hero-sub{font-size:clamp(1rem,2vw,1.15rem);color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:44px;max-width:600px;margin-left:auto;margin-right:auto}
+    .hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .btn-primary{font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:16px 40px;background:var(--primary);color:var(--white);border:none;border-radius:2px;cursor:pointer;text-decoration:none;transition:background .3s,transform .3s;display:inline-block}
+    .btn-primary:hover{background:var(--light-green);transform:translateY(-2px)}
+    .btn-outline{font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:16px 40px;background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.6);border-radius:2px;cursor:pointer;text-decoration:none;transition:all .3s;display:inline-block}
+    .btn-outline:hover{background:rgba(255,255,255,.1);border-color:var(--white)}
+    .scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
+    .scroll-indicator span{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+    .scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,rgba(255,255,255,.6),transparent);animation:scrollPulse 2s ease-in-out infinite}
+    @keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+    /* ── SHARED ── */
+    .section-num{font-family:var(--serif);font-size:6rem;font-weight:700;color:rgba(74,124,74,.08);line-height:1;position:absolute;top:40px;right:5%;user-select:none;pointer-events:none}
+    .section-label{font-size:.7rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--primary);margin-bottom:12px;display:block}
+    .section-title{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--dark);line-height:1.2;letter-spacing:-.02em;margin-bottom:20px}
+    .section-line{width:40px;height:2px;background:var(--primary);margin-bottom:24px}
+    .section-text{font-size:1rem;line-height:1.8;color:#4a5a4a}
+
+    /* ── ABOUT ── */
+    #about{padding:120px 5%;background:var(--white);position:relative}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1200px;margin:0 auto}
+    .about-img-wrap{position:relative}
+    .about-img-wrap::before{content:'';position:absolute;top:-20px;left:-20px;right:20px;bottom:20px;border:1px solid var(--primary);border-radius:2px;z-index:0}
+    .about-img-wrap img{width:100%;height:520px;object-fit:cover;border-radius:2px;position:relative;z-index:1;display:block}
+    .about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px;padding-top:44px;border-top:1px solid rgba(74,124,74,.15)}
+    .stat-value{font-family:var(--serif);font-size:2.2rem;font-weight:600;color:var(--primary);line-height:1;display:block;margin-bottom:6px}
+    .stat-label{font-size:.8rem;color:#6a7a6a;line-height:1.4}
+    @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:48px}}
+
+    /* ── MENU ── */
+    #menu{padding:120px 5%;background:var(--very-light);position:relative}
+    .menu-header{text-align:center;max-width:600px;margin:0 auto 64px}
+    .menu-header .section-line{margin:0 auto 24px}
+    .tab-nav{display:flex;justify-content:center;border-bottom:2px solid rgba(74,124,74,.15);margin-bottom:48px}
+    .tab-btn{font-family:var(--sans);font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:16px 36px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;cursor:pointer;color:#6a7a6a;transition:all .3s}
+    .tab-btn.active,.tab-btn:hover{color:var(--primary);border-bottom-color:var(--primary)}
+    .tab-content{display:none;max-width:900px;margin:0 auto}
+    .tab-content.active{display:block;animation:tabIn .4s ease}
+    @keyframes tabIn{from{transform:translateY(8px)}to{transform:translateY(0)}}
+    .menu-card{background:var(--white);border-radius:4px;padding:48px;box-shadow:0 4px 30px rgba(26,46,26,.06)}
+    .menu-card-title{font-family:var(--serif);font-size:1.6rem;color:var(--dark);margin-bottom:8px}
+    .menu-card-desc{font-size:.9rem;color:#6a7a6a;margin-bottom:32px;line-height:1.6}
+    .menu-item{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(74,124,74,.1)}
+    .menu-item:last-child{border-bottom:none}
+    .menu-item-name{font-size:.95rem;color:var(--dark);font-weight:500}
+    .menu-item-detail{font-size:.8rem;color:#8a9a8a;margin-top:3px}
+    .menu-item-tag{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:2px;background:var(--very-light);color:var(--primary);flex-shrink:0}
+    @media(max-width:600px){.tab-btn{padding:12px 16px;font-size:.72rem}.menu-card{padding:32px 24px}}
+
+    /* ── GALLERY ── */
+    #gallery{padding:120px 5%;background:var(--white);position:relative}
+    .gallery-header{text-align:center;max-width:600px;margin:0 auto 64px}
+    .gallery-header .section-line{margin:0 auto 24px}
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:280px 280px;gap:16px;max-width:1200px;margin:0 auto}
+    .gallery-item{position:relative;overflow:hidden;border-radius:2px;cursor:pointer}
+    .gallery-item:first-child{grid-row:span 2}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block}
+    .gallery-item:hover img{transform:scale(1.05)}
+    .gallery-overlay{position:absolute;inset:0;background:rgba(45,74,45,0);transition:background .4s;display:flex;align-items:center;justify-content:center}
+    .gallery-item:hover .gallery-overlay{background:rgba(45,74,45,.5)}
+    .gallery-plus{color:var(--white);font-size:2.5rem;font-weight:300;transform:scale(0);transition:transform .4s}
+    .gallery-item:hover .gallery-plus{transform:scale(1)}
+    @media(max-width:768px){.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}.gallery-item:first-child{grid-row:span 1}.gallery-item{height:220px}}
+
+    /* ── WHY ── */
+    #why{background:var(--dark-section);padding:120px 0 0;position:relative;overflow:hidden}
+    #why .section-num{color:rgba(255,255,255,.04)}
+    .why-inner{padding:0 5% 80px;max-width:1200px;margin:0 auto}
+    .why-header{text-align:center;margin-bottom:80px}
+    .why-header .section-label{color:var(--light-green)}
+    .why-header .section-title{color:var(--white)}
+    .why-header .section-line{margin:0 auto 24px;background:var(--light-green)}
+    .usp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+    .usp-card{text-align:center;padding:48px 32px;border:1px solid rgba(106,173,106,.15);border-radius:2px;transition:border-color .3s,transform .3s}
+    .usp-card:hover{border-color:rgba(106,173,106,.4);transform:translateY(-4px)}
+    .usp-icon{width:56px;height:56px;background:rgba(106,173,106,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:1.5rem}
+    .usp-title{font-family:var(--serif);font-size:1.3rem;color:var(--white);margin-bottom:16px;font-weight:600}
+    .usp-desc{font-size:.9rem;color:rgba(255,255,255,.6);line-height:1.7}
+    @media(max-width:768px){.usp-grid{grid-template-columns:1fr}}
+    .marquee-wrapper{overflow:hidden;border-top:1px solid rgba(106,173,106,.12);padding:26px 0;background:rgba(0,0,0,.1)}
+    .marquee-track{display:flex;white-space:nowrap;animation:marquee 28s linear infinite}
+    .marquee-item{font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);padding:0 40px;flex-shrink:0}
+    .marquee-dot{color:var(--light-green)}
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    /* ── TESTIMONIALS ── */
+    #testimonials{padding:120px 5%;background:var(--bg-light);position:relative}
+    .testimonials-header{text-align:center;max-width:600px;margin:0 auto 72px}
+    .testimonials-header .section-line{margin:0 auto 24px}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1200px;margin:0 auto}
+    .testimonial-card{background:var(--white);padding:40px 36px;border-radius:4px;box-shadow:0 4px 24px rgba(26,46,26,.06);transition:transform .3s,box-shadow .3s}
+    .testimonial-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(26,46,26,.1)}
+    .t-quote{font-family:var(--serif);font-size:3rem;line-height:1;color:var(--primary);display:block;margin-bottom:12px}
+    .t-text{font-size:.95rem;line-height:1.8;color:#4a5a4a;margin-bottom:28px;font-style:italic}
+    .t-footer{display:flex;align-items:center;gap:12px}
+    .t-avatar{width:44px;height:44px;border-radius:50%;background:var(--very-light);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.1rem;color:var(--primary);font-weight:600;flex-shrink:0}
+    .t-name{font-size:.85rem;font-weight:600;color:var(--dark)}
+    .t-role{font-size:.75rem;color:#8a9a8a}
+    @media(max-width:900px){.testimonials-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}}
+
+    /* ── HOURS ── */
+    #hours{display:grid;grid-template-columns:1fr 1fr;min-height:580px}
+    .hours-left{background:var(--dark-section);padding:100px 60px;display:flex;flex-direction:column;justify-content:center}
+    .hours-left .section-label{color:var(--light-green)}
+    .hours-left .section-title{color:var(--white)}
+    .hours-left .section-line{background:var(--light-green)}
+    .hours-list{list-style:none;margin-top:8px}
+    .hours-list li{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(106,173,106,.12);font-size:.95rem}
+    .hours-list li:last-child{border-bottom:none}
+    .hours-day{color:rgba(255,255,255,.65)}
+    .hours-time{color:var(--white);font-weight:600;font-family:var(--serif)}
+    .hours-right{position:relative;overflow:hidden}
+    .hours-right img{width:100%;height:100%;object-fit:cover;display:block}
+    .hours-overlay{position:absolute;inset:0;background:rgba(26,46,26,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px}
+    .hours-cta-title{font-family:var(--serif);font-size:1.8rem;color:var(--white);margin-bottom:10px}
+    .hours-cta-sub{font-size:.9rem;color:rgba(255,255,255,.8);margin-bottom:32px}
+    @media(max-width:768px){#hours{grid-template-columns:1fr}.hours-left{padding:80px 5%}.hours-right{min-height:360px}}
+
+    /* ── CONTACT ── */
+    #contact{padding:120px 5%;background:var(--dark-section);position:relative}
+    #contact .section-num{color:rgba(255,255,255,.04)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;max-width:1200px;margin:0 auto}
+    .contact-info .section-label{color:var(--light-green)}
+    .contact-info .section-title{color:var(--white)}
+    .contact-info .section-line{background:var(--light-green)}
+    .contact-info .section-text{color:rgba(255,255,255,.6)}
+    .contact-details{margin-top:40px;display:flex;flex-direction:column;gap:20px}
+    .cd-item{display:flex;gap:16px;align-items:flex-start}
+    .cd-icon{width:40px;height:40px;background:rgba(106,173,106,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.95rem}
+    .cd-label{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:4px}
+    .cd-value{font-size:.95rem;color:var(--white);font-weight:500}
+    .cd-value a{color:inherit;text-decoration:none}
+    .contact-form{background:rgba(255,255,255,.04);border:1px solid rgba(106,173,106,.15);border-radius:4px;padding:48px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .form-field{position:relative;margin-bottom:32px}
+    .form-field input,.form-field textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(106,173,106,.3);color:var(--white);font-family:var(--sans);font-size:.95rem;padding:12px 0;outline:none;transition:border-color .3s;resize:none}
+    .form-field textarea{height:80px}
+    .form-field input:focus,.form-field textarea:focus{border-bottom-color:var(--light-green)}
+    .form-field label{position:absolute;top:12px;left:0;font-size:.85rem;color:rgba(255,255,255,.4);pointer-events:none;transition:all .3s}
+    .form-field input:focus~label,
+    .form-field input:not(:placeholder-shown)~label,
+    .form-field textarea:focus~label,
+    .form-field textarea:not(:placeholder-shown)~label{top:-12px;font-size:.68rem;color:var(--light-green);letter-spacing:.1em;text-transform:uppercase}
+    .form-field input::placeholder,.form-field textarea::placeholder{color:transparent}
+    .btn-submit{width:100%;font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:16px;background:var(--primary);color:var(--white);border:none;border-radius:2px;cursor:pointer;transition:background .3s}
+    .btn-submit:hover{background:var(--light-green)}
+    @media(max-width:900px){.contact-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.contact-form{padding:32px 24px}}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark);padding:60px 5% 40px}
+    .footer-inner{max-width:1200px;margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:60px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:32px}
+    .footer-logo{font-family:var(--serif);font-size:1.4rem;color:var(--white);display:block;margin-bottom:16px}
+    .footer-brand p{font-size:.85rem;color:rgba(255,255,255,.4);line-height:1.7;max-width:280px}
+    .footer-col-title{font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:20px}
+    .footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-links a{font-size:.85rem;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s}
+    .footer-links a:hover{color:var(--light-green)}
+    .footer-bottom{display:flex;justify-content:space-between;align-items:center}
+    .footer-copy{font-size:.75rem;color:rgba(255,255,255,.22)}
+    .footer-accent{width:40px;height:2px;background:var(--primary)}
+    @media(max-width:768px){.footer-top{grid-template-columns:1fr;gap:40px}}
+
+    /* ── STICKY PHONE ── */
+    #sticky-phone{position:fixed;bottom:32px;right:32px;z-index:900}
+    .phone-btn{display:flex;align-items:center;gap:10px;padding:14px 24px;background:var(--primary);color:var(--white);text-decoration:none;border-radius:100px;box-shadow:0 8px 30px rgba(74,124,74,.4);transition:all .3s;font-size:.85rem;font-weight:600}
+    .phone-btn:hover{background:var(--light-green);transform:translateY(-2px);box-shadow:0 12px 40px rgba(74,124,74,.5)}
+    .phone-icon{width:18px;height:18px;animation:phoneRing 3s ease-in-out infinite}
+    @keyframes phoneRing{0%,85%,100%{transform:rotate(0)}88%{transform:rotate(-12deg)}91%{transform:rotate(12deg)}94%{transform:rotate(-8deg)}97%{transform:rotate(8deg)}}
+  </style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-screen">
+  <div class="ls-company">KANTEEN ORGANICA</div>
+  <div class="ls-bar-wrap"><div class="ls-bar" id="ls-bar"></div></div>
+  <div class="ls-text">Připravujeme váš návrh webu</div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">KANTEEN ORGANICA</a>
+  <ul class="nav-links">
+    <li><a href="#about">O nás</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Galerie</a></li>
+    <li><a href="#why">Proč my</a></li>
+    <li><a href="#testimonials">Reference</a></li>
+    <li><a href="#contact" class="nav-cta">Rezervovat stůl</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Otevřít menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <video id="hero-video" autoplay muted playsinline preload="auto" loop>
+    <source src="https://raw.githubusercontent.com/rafaelbsqwer/webhunter-assets/main/food-jidelna/video.mp4" type="video/mp4">
+  </video>
+  <div id="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">— Závodní jídelna &amp; Stravování —</span>
+    <h1 class="hero-title">Kde se vaří s láskou každý den</h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Čerstvé suroviny a domácí recepty v příjemné atmosféře</p>
+    <div class="hero-buttons">
+      <a href="#menu" class="btn-primary">Rezervovat stůl</a>
+      <a href="#contact" class="btn-outline">Kontaktujte nás</a>
+    </div>
+  </div>
+  <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- 01 — O NÁS -->
+<section id="about">
+  <span class="section-num">01</span>
+  <div class="about-grid">
+    <div class="about-img-wrap" data-anim="left">
+      <img src="https://raw.githubusercontent.com/rafaelbsqwer/webhunter-assets/main/food-jidelna/foto1.jpeg" alt="Naše jídelna" loading="lazy">
+    </div>
+    <div data-anim="right">
+      <span class="section-label">01 — O nás</span>
+      <h2 class="section-title">Kvalitní strava<br><em>přímo na pracovišti</em></h2>
+      <div class="section-line"></div>
+      <p class="section-text">KANTEEN ORGANICA je oblíbeným místem pro setkání a dobré jídlo. Nabízíme tradiční českou kuchyni připravenou z čerstvých surovin s důrazem na kvalitu a domácí chuť. Přijďte si k nám odpočinout a vychutnat si příjemnou atmosféru.</p>
+      <div class="about-stats">
+        <div class="stat-item">
+          <span class="stat-value">500+</span>
+          <span class="stat-label">obědů denně</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">15</span>
+          <span class="stat-label">let zkušeností</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">5</span>
+          <span class="stat-label">druhů jídel</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 — DENNÍ MENU -->
+<section id="menu">
+  <span class="section-num">02</span>
+  <div class="menu-header">
+    <span class="section-label">02 — Denní menu</span>
+    <h2 class="section-title">Pestré menu<br>každý den čerstvé</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="t1">Polévky a předkrmy</button>
+    <button class="tab-btn" data-tab="t2">Hlavní jídla</button>
+    <button class="tab-btn" data-tab="t3">Dezerty a nápoje</button>
+  </div>
+  <div id="t1" class="tab-content active">
+    <div class="menu-card">
+      <h3 class="menu-card-title">Polévky a předkrmy</h3>
+      <p class="menu-card-desc">Domácí polévky a sezónní předkrmy připravované každý den čerstvě.</p>
+      <div>
+        <div class="menu-item"><div><div class="menu-item-name">Polévka dne</div><div class="menu-item-detail">Čerstvě vařená každý den</div></div><span class="menu-item-tag">Čerstvé</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Hlavní chod č. 1</div><div class="menu-item-detail">Maso, příloha, zeleninový salát</div></div><span class="menu-item-tag">Výběr</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Hlavní chod č. 2</div><div class="menu-item-detail">Drůbeží alternativa</div></div><span class="menu-item-tag">Výběr</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Vegetariánský chod</div><div class="menu-item-detail">Bez masa, plné chutě</div></div><span class="menu-item-tag">Vege</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Dezert</div><div class="menu-item-detail">Sladká tečka za obědem</div></div><span class="menu-item-tag">Bonus</span></div>
+      </div>
+    </div>
+  </div>
+  <div id="t2" class="tab-content">
+    <div class="menu-card">
+      <h3 class="menu-card-title">Hlavní jídla</h3>
+      <p class="menu-card-desc">Tradiční česká jídla i moderní kulinářské speciality od našeho šéfkuchaře.</p>
+      <div>
+        <div class="menu-item"><div><div class="menu-item-name">Snídaňový bufet</div><div class="menu-item-detail">Pečivo, jogurty, čerstvé ovoce</div></div><span class="menu-item-tag">Ranní</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Teplé snídaně</div><div class="menu-item-detail">Vejce, ovesná kaše, palačinky</div></div><span class="menu-item-tag">Teplé</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Nápoje</div><div class="menu-item-detail">Káva, čaj, čerstvé džusy</div></div><span class="menu-item-tag">Nápoje</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Odpolední svačina</div><div class="menu-item-detail">Ovoce, jogurty, müsli tyčinky</div></div><span class="menu-item-tag">Svačina</span></div>
+      </div>
+    </div>
+  </div>
+  <div id="t3" class="tab-content">
+    <div class="menu-card">
+      <h3 class="menu-card-title">Dezerty a nápoje</h3>
+      <p class="menu-card-desc">Domácí dezerty a pečlivě vybraná vína doplní Váš gastronomický zážitek.</p>
+      <div>
+        <div class="menu-item"><div><div class="menu-item-name">Fitness menu</div><div class="menu-item-detail">Vysoký obsah bílkovin, nízký tuk</div></div><span class="menu-item-tag">Fitness</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Bezlepkové menu</div><div class="menu-item-detail">Certifikováno, bez kompromisů</div></div><span class="menu-item-tag">GF</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Veganské menu</div><div class="menu-item-detail">100% rostlinná strava</div></div><span class="menu-item-tag">Vegan</span></div>
+        <div class="menu-item"><div><div class="menu-item-name">Diabetické menu</div><div class="menu-item-detail">Vyvážené glycemické hodnoty</div></div><span class="menu-item-tag">Dia</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 — GALERIE -->
+<section id="gallery">
+  <span class="section-num">03</span>
+  <div class="gallery-header">
+    <span class="section-label">03 — Galerie</span>
+    <h2 class="section-title">Pohled do<br>naší kuchyně</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/rafaelbsqwer/webhunter-assets/main/food-jidelna/foto1.jpeg" alt="Jídelna — interiér" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/rafaelbsqwer/webhunter-assets/main/food-jidelna/foto2.jpeg" alt="Zdravé jídlo" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/rafaelbsqwer/webhunter-assets/main/food-jidelna/foto3.jpeg" alt="Čerstvé suroviny" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/rafaelbsqwer/webhunter-assets/main/food-jidelna/foto3.jpeg" alt="Výdej obědů" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://raw.githubusercontent.com/rafaelbsqwer/webhunter-assets/main/food-jidelna/foto2.jpeg" alt="Moderní prostory" loading="lazy">
+      <div class="gallery-overlay"><span class="gallery-plus">+</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 — PROČ MY -->
+<section id="why">
+  <span class="section-num">04</span>
+  <div class="why-inner">
+    <div class="why-header">
+      <span class="section-label">04 — Proč my</span>
+      <h2 class="section-title">Co nás odlišuje<br>od ostatních</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="usp-grid">
+      <div class="usp-card" data-anim="usp">
+        <div class="usp-icon">🥗</div>
+        <h3 class="usp-title">Čerstvé suroviny denně</h3>
+        <p class="usp-desc">Pracujeme s lokálními dodavateli pro maximální čerstvost každého pokrmu.</p>
+      </div>
+      <div class="usp-card" data-anim="usp">
+        <div class="usp-icon">⚡</div>
+        <h3 class="usp-title">Domácí receptury</h3>
+        <p class="usp-desc">Vaříme podle tradičních receptů s moderním nádechem.</p>
+      </div>
+      <div class="usp-card" data-anim="usp">
+        <div class="usp-icon">🌱</div>
+        <h3 class="usp-title">Přátelská obsluha</h3>
+        <p class="usp-desc">Každý host je pro nás priorita — přijďte se přesvědčit.</p>
+      </div>
+    </div>
+  </div>
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <span class="marquee-item">ČERSTVÉ SUROVINY <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">VYVÁŽENÁ STRAVA <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">RYCHLÉ VYDÁVÁNÍ <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">VEGETARIÁNSKÉ MENU <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">ČERSTVÉ SUROVINY <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">VYVÁŽENÁ STRAVA <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">RYCHLÉ VYDÁVÁNÍ <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">VEGETARIÁNSKÉ MENU <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">ČERSTVÉ SUROVINY <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">VYVÁŽENÁ STRAVA <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">RYCHLÉ VYDÁVÁNÍ <span class="marquee-dot">·</span></span>
+      <span class="marquee-item">VEGETARIÁNSKÉ MENU <span class="marquee-dot">·</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- 05 — REFERENCE -->
+<section id="testimonials">
+  <span class="section-num">05</span>
+  <div class="testimonials-header">
+    <span class="section-label">05 — Reference</span>
+    <h2 class="section-title">Co říkají<br>naši zákazníci</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card" data-anim="card">
+      <span class="t-quote">"</span>
+      <p class="t-text">Skvělé jídlo a příjemná obsluha. Vracíme se pravidelně!</p>
+      <div class="t-footer">
+        <div class="t-avatar">A</div>
+        <div>
+          <div class="t-name">— Martin K.</div>
+          <div class="t-role">Spokojený zákazník</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card" data-anim="card">
+      <span class="t-quote">"</span>
+      <p class="t-text">Nejlepší restaurace v okolí. Doporučuji každému.</p>
+      <div class="t-footer">
+        <div class="t-avatar">B</div>
+        <div>
+          <div class="t-name">— Jana N.</div>
+          <div class="t-role">Věrný strávník</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card" data-anim="card">
+      <span class="t-quote">"</span>
+      <p class="t-text">Výborná kuchyně a útulná atmosféra. Určitě přijdeme znovu.</p>
+      <div class="t-footer">
+        <div class="t-avatar">C</div>
+        <div>
+          <div class="t-name">— Petr V.</div>
+          <div class="t-role">Pravidelný host</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 — VÝDEJNÍ DOBY -->
+<section id="hours">
+  <div class="hours-left" data-anim="left">
+    <span class="section-label">06 — Výdejní doby</span>
+    <h2 class="section-title">Kdy nás<br>navštívit</h2>
+    <div class="section-line"></div>
+    <ul class="hours-list">
+      <li><span class="hours-day">Snídaně</span><span class="hours-time">7:00 — 9:00</span></li>
+      <li><span class="hours-day">Dopolední svačina</span><span class="hours-time">9:30 — 10:30</span></li>
+      <li><span class="hours-day">Oběd</span><span class="hours-time">11:00 — 14:00</span></li>
+      <li><span class="hours-day">Odpolední svačina</span><span class="hours-time">14:30 — 15:30</span></li>
+      <li><span class="hours-day">Provoz</span><span class="hours-time">Po — Pá</span></li>
+    </ul>
+  </div>
+  <div class="hours-right" data-anim="right">
+    <img src="https://raw.githubusercontent.com/rafaelbsqwer/webhunter-assets/main/food-jidelna/foto2.jpeg" alt="Výdej jídel" loading="lazy">
+    <div class="hours-overlay">
+      <h3 class="hours-cta-title">Objednejte se<br>ještě dnes</h3>
+      <p class="hours-cta-sub">Zajistíme stravování na míru vaší firmě</p>
+      <a href="tel:725 099 580" class="btn-primary">Rezervovat stůl</a>
+    </div>
+  </div>
+</section>
+
+<!-- 07 — KONTAKT -->
+<section id="contact">
+  <span class="section-num">07</span>
+  <div class="contact-grid">
+    <div class="contact-info" data-anim="left">
+      <span class="section-label">07 — Kontakt</span>
+      <h2 class="section-title">Napište<br>nebo zavolejte</h2>
+      <div class="section-line"></div>
+      <p class="section-text">Máte dotaz na naše služby nebo chcete projednat stravování pro vaši firmu? Rádi vás uslyšíme.</p>
+      <div class="contact-details">
+        <div class="cd-item">
+          <div class="cd-icon">📞</div>
+          <div><div class="cd-label">Telefon</div><div class="cd-value"><a href="tel:725 099 580">725 099 580</a></div></div>
+        </div>
+        <div class="cd-item">
+          <div class="cd-icon">✉️</div>
+          <div><div class="cd-label">E-mail</div><div class="cd-value"><a href="mailto:organica@kanteen.cz">organica@kanteen.cz</a></div></div>
+        </div>
+        <div class="cd-item">
+          <div class="cd-icon">📍</div>
+          <div><div class="cd-label">Adresa</div><div class="cd-value"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form" data-anim="right">
+      <form onsubmit="submitForm(event)">
+        <div class="form-row">
+          <div class="form-field">
+            <input type="text" id="fn" name="name" placeholder="Jméno" required>
+            <label for="fn">Vaše jméno</label>
+          </div>
+          <div class="form-field">
+            <input type="email" id="fe" name="email" placeholder="Email" required>
+            <label for="fe">E-mail</label>
+          </div>
+        </div>
+        <div class="form-field">
+          <input type="tel" id="fp" name="phone" placeholder="Telefon">
+          <label for="fp">Telefon</label>
+        </div>
+        <div class="form-field">
+          <textarea id="fm" name="message" placeholder="Zpráva" required></textarea>
+          <label for="fm">Vaše zpráva</label>
+        </div>
+        <button type="submit" class="btn-submit">Odeslat zprávu</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">KANTEEN ORGANICA</span>
+        <p>Poskytujeme kvalitní stravovací služby pro firmy a průmyslové podniky. Každý den čerstvě, zdravě a s láskou k vaření.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigace</div>
+        <ul class="footer-links">
+          <li><a href="#about">O nás</a></li>
+          <li><a href="#menu">Denní menu</a></li>
+          <li><a href="#gallery">Galerie</a></li>
+          <li><a href="#why">Proč my</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Kontakt</div>
+        <ul class="footer-links">
+          <li><a href="tel:725 099 580">725 099 580</a></li>
+          <li><a href="mailto:organica@kanteen.cz">organica@kanteen.cz</a></li>
+          <li><a href="#"></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 KANTEEN ORGANICA. Všechna práva vyhrazena.</div>
+      <div class="footer-accent"></div>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY PHONE -->
+<div id="sticky-phone">
+  <a href="tel:725 099 580" class="phone-btn">
+    <svg class="phone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.8 19.79 19.79 0 01.02 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+    </svg>
+    725 099 580
+  </a>
+</div>
+
+<!-- CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function(){
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── LOADING ── */
+  var screen = document.getElementById('loading-screen');
+  var bar    = document.getElementById('ls-bar');
+  var video  = document.getElementById('hero-video');
+  var done   = false;
+  var pct    = 0;
+
+  var ticker = setInterval(function(){
+    pct = Math.min(pct + Math.random() * 14, 88);
+    bar.style.width = pct + '%';
+  }, 180);
+
+  function hideLoader(){
+    if(done) return;
+    done = true;
+    clearInterval(ticker);
+    bar.style.width = '100%';
+    setTimeout(function(){
+      gsap.fromTo(screen, {y:0}, {y:'-100%', duration:.8, ease:'power2.inOut', onComplete:function(){
+        screen.style.display = 'none';
+        bootAnimations();
+      }});
+    }, 260);
+  }
+
+  video.addEventListener('canplaythrough', hideLoader);
+  setTimeout(hideLoader, 4000);
+
+  /* ── LENIS ── */
+  var lenis = new Lenis({duration:1.2, easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))}, smoothWheel:true});
+  gsap.ticker.add(function(t){ lenis.raf(t*1000); });
+  gsap.ticker.lagSmoothing(0);
+  lenis.on('scroll', ScrollTrigger.update);
+
+  /* ── NAV ── */
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+
+  /* ── TABS ── */
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.tab-content').forEach(function(c){ c.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ── CONTACT FORM ── */
+  window.submitForm = function(e){
+    e.preventDefault();
+    var btn = e.target.querySelector('.btn-submit');
+    var orig = btn.textContent;
+    btn.textContent = 'Zpráva odeslána ✓';
+    btn.style.background = '#6aad6a';
+    setTimeout(function(){ btn.textContent = orig; btn.style.background = ''; e.target.reset(); }, 3000);
+  };
+
+  /* ── SCROLL-DRIVEN VIDEO ── */
+  video.addEventListener('loadedmetadata', function(){
+    ScrollTrigger.create({
+      trigger:'#hero', start:'top top', end:'bottom top',
+      onUpdate:function(self){
+        if(video.duration) video.currentTime = video.duration * self.progress * 0.6;
+      }
+    });
+  });
+
+  /* ── ANIMATIONS ── */
+  function bootAnimations(){
+
+    /* Hero */
+    var hq = document.querySelector('.hero-content');
+    gsap.from(hq.querySelector('.hero-tag'),   {y:30, duration:.9, ease:'power2.out', delay:.1});
+    gsap.from(hq.querySelector('.hero-title'), {y:50, duration:1.1, ease:'power2.out', delay:.25});
+    gsap.from([hq.querySelector('.hero-line'), hq.querySelector('.hero-sub')], {y:30, duration:.9, ease:'power2.out', stagger:.12, delay:.45});
+    gsap.from(hq.querySelectorAll('.hero-buttons a'), {y:20, duration:.9, ease:'power2.out', stagger:.12, delay:.65});
+    gsap.from('.scroll-indicator', {y:20, duration:.9, ease:'power2.out', delay:1});
+
+    /* Sticky phone */
+    gsap.from('#sticky-phone', {x:120, duration:.9, ease:'power2.out', delay:1.4});
+
+    /* Generic scroll-from helpers */
+    function fromLeft(sel, trigger){
+      gsap.from(sel, {x:-60, duration:.9, ease:'power2.out', scrollTrigger:{trigger:trigger||sel, start:'top 78%'}});
+    }
+    function fromRight(sel, trigger){
+      gsap.from(sel, {x:60, duration:.9, ease:'power2.out', scrollTrigger:{trigger:trigger||sel, start:'top 78%'}});
+    }
+    function fromDown(sel, trigger, stagger){
+      gsap.from(sel, {y:40, duration:.9, ease:'power2.out', stagger:stagger||0, scrollTrigger:{trigger:trigger||sel, start:'top 80%'}});
+    }
+
+    /* About */
+    fromLeft('[data-anim="left"]', '#about');
+    fromRight('[data-anim="right"]', '#about');
+    fromDown('#about .stat-item', '#about .about-stats', .12);
+
+    /* Menu */
+    fromDown('#menu .menu-header', '#menu');
+
+    /* Gallery */
+    document.querySelectorAll('.gallery-item').forEach(function(el, i){
+      gsap.from(el, {y:40, duration:.9, ease:'power2.out', delay:i*.08, scrollTrigger:{trigger:'.gallery-grid', start:'top 80%'}});
+    });
+
+    /* Why */
+    fromDown('.why-header', '#why');
+    gsap.from('[data-anim="usp"]', {y:40, duration:.9, ease:'power2.out', stagger:.12, scrollTrigger:{trigger:'.usp-grid', start:'top 78%'}});
+
+    /* Testimonials */
+    gsap.from('[data-anim="card"]', {y:40, duration:.9, ease:'power2.out', stagger:.12, scrollTrigger:{trigger:'.testimonials-grid', start:'top 80%'}});
+
+    /* Hours */
+    fromLeft('#hours .hours-left', '#hours');
+    fromRight('#hours .hours-right', '#hours');
+
+    /* Contact */
+    fromLeft('#contact [data-anim="left"]', '#contact');
+    fromRight('#contact [data-anim="right"]', '#contact');
+
+    /* Section numbers */
+    document.querySelectorAll('.section-num').forEach(function(el){
+      gsap.from(el, {y:40, duration:1.4, ease:'power2.out', scrollTrigger:{trigger:el.parentElement, start:'top 82%'}});
+    });
+
+    /* Footer */
+    fromDown('.footer-top > *', 'footer', .1);
+  }
+
+})();
+</script>
+
+<!-- TRACKING -->
+<script>
+fetch('http://localhost:3000/t/visit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({siteId:'wh-kanteen-organica-1781807607108'})}).catch(function(){});
+</script>
+
+</body>
+</html>
